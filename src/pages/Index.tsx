@@ -1,14 +1,13 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, ShoppingCart, ChevronDown, Heart } from "lucide-react";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import ProductGrid from "@/components/ProductGrid";
+import HeroCarousel from "@/components/HeroCarousel";
 
 const Index = () => {
   const [cartCount, setCartCount] = useState(0);
@@ -76,36 +75,47 @@ const Index = () => {
       <main className="flex-1">
         {/* Hero section */}
         <section className="relative">
-          <div className="bg-gradient-to-r from-black via-gray-900 to-black text-white">
-            <div className="container mx-auto py-16 md:py-24 px-4">
+          <div className="bg-gradient-to-r from-black via-gray-900 to-black text-white overflow-hidden">
+            {/* Add animated background pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0 bg-grid-white/5" style={{ 
+                backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.1) 1px, transparent 1px)", 
+                backgroundSize: "40px 40px",
+                animation: "moveBackground 20s linear infinite"
+              }} />
+            </div>
+            <div className="container mx-auto py-16 md:py-20 px-4 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30">New Collection</Badge>
-                  <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                    The Future of <span className="bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text">Shopping</span>
+                <div className="animate-fade-in">
+                  <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 uppercase tracking-wider">
+                    Next Generation
+                  </Badge>
+                  <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    The Future of <br /><span className="bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text">Shopping</span>
                   </h1>
-                  <p className="text-gray-300 text-lg md:text-xl mb-8">
-                    Explore cutting-edge products with an immersive shopping experience
+                  <p className="text-gray-300 text-lg md:text-xl mb-8 max-w-md">
+                    Explore cutting-edge products with an immersive shopping experience designed for tomorrow's world
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button size="lg">Shop Now</Button>
-                    <Button size="lg" variant="outline">Explore Collection</Button>
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 transition-all duration-300 transform hover:translate-y-[-2px]">
+                      Shop Now
+                    </Button>
+                    <Button size="lg" variant="outline" className="border-white/30 hover:border-white transition-all duration-300 transform hover:translate-y-[-2px]">
+                      Explore Collection
+                    </Button>
                   </div>
                 </div>
-                <div className="hidden md:block">
-                  <Carousel>
-                    <CarouselContent>
-                      <CarouselItem>
-                        <img 
-                          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                          alt="Person using a futuristic laptop" 
-                          className="rounded-lg shadow-lg" 
-                        />
-                      </CarouselItem>
-                    </CarouselContent>
-                  </Carousel>
+                <div className="hidden md:block relative z-10">
+                  <HeroCarousel />
                 </div>
               </div>
+            </div>
+            
+            {/* Add animated wave divider */}
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-0 transform">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block h-12 w-full" fill="currentColor">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-background"></path>
+              </svg>
             </div>
           </div>
         </section>
