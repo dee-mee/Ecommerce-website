@@ -1,11 +1,12 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { 
   Carousel, 
   CarouselContent, 
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
@@ -19,9 +20,26 @@ const images = [
 
 const HeroCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
   const [plugin] = useState(() => 
     Autoplay({ delay: 4000, stopOnInteraction: false })
   );
+
+  useEffect(() => {
+    if (!api) return;
+    
+    const onSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+    
+    api.on("select", onSelect);
+    // Initial call to set the active index
+    onSelect();
+    
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
 
   return (
     <div className="relative w-full overflow-hidden rounded-xl">
@@ -32,7 +50,7 @@ const HeroCarousel = () => {
         }}
         plugins={[plugin]}
         className="w-full"
-        onSlideChange={(idx) => setActiveIndex(idx)}
+        setApi={setApi}
       >
         <CarouselContent>
           {images.map((src, index) => (
